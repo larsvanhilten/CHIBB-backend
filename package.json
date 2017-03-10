@@ -15,6 +15,7 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "eslint": "^3.17.1",
     "eslint-config-warp": "^1.2.0",
     "mocha": "^3.2.0"
   }
