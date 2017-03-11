@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const _ = require('lodash');
+const db = require('./src/services/mongo');
 
 const app = express();
 const router = express.Router();
@@ -19,6 +20,10 @@ fs.readdir('./src/routes', routes => {
   });
 });
 
+app.use((req, res, next) => {
+  req.db = db;
+  next();
+});
 
 app.use(router);
 
