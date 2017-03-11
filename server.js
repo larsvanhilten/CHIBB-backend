@@ -1,5 +1,5 @@
 const express = require('express');
-const CONFIG = require('config');
+const config = require('config');
 const fs = require('fs');
 const _ = require('lodash');
 
@@ -13,5 +13,5 @@ _.map(fs.readdirSync('./src/routes'), route => {
 
 app.use(router);
 
-app.listen(CONFIG.server.http.port);
+app.listen(config.server.http.port);
 
