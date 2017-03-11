@@ -1,0 +1,17 @@
+{
+  "missingProperty": {
+    "code": 403,
+    "message": "The property '%d' is missing.",
+    "type": "missingProperty"
+  },
+  "invalidProperty": {
+    "code": 403,
+    "message": "The property '%d' is invalid.",
+    "type": "invalidProperty"
+  },
+  "invalidServerError": {
+    "code": 500,
+    "message": "Something went wrong on the server.",
+    "type": "invalidServerError"
+  }
+}

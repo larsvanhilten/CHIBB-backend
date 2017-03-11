@@ -1,19 +1,22 @@
 /* global  it */
 
 const assert = require('assert');
-const hasEmail = require('../../../src/validators/hasEmail');
+const hasEmail = require('../../../src/validators/users/hasEmail');
 
 it(`returns 'missingProperty' error when there is no email`, () => {
   const email = undefined;
-  assert.equal(hasEmail(email), {errorType: 'missingProperty'});
+  return hasEmail(email)
+  .catch(err => assert.equal('missingProperty', err.type));
 });
 
 it(`returns 'invalidProperty' error when there is an invalid email`, () => {
   const email = 'invalid';
-  assert.equal(hasEmail(email), {errorType: 'invalidProperty'});
+  return hasEmail(email)
+  .catch(err => assert.equal('invalidProperty', err.type));
 });
 
 it(`returns true  when there is a valid email`, () => {
   const email = 'test@wearereasonablepeople.com';
-  assert.equal(hasEmail(email), true);
+  return hasEmail(email)
+  .then(result => assert.equal(true, result));
 });

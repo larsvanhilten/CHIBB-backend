@@ -1,14 +1,16 @@
 /* global  it */
 
 const assert = require('assert');
-const hasPassword = require('../../../src/validators/hasPassword');
+const hasPassword = require('../../../src/validators/users/hasPassword');
 
 it(`returns 'missingProperty' error when there is no password`, () => {
   const password = undefined;
-  assert.equal(hasPassword(password), {errorType: 'missingProperty'});
+  return hasPassword(password)
+  .catch(err => assert.equal('missingProperty', err.type));
 });
 
 it(`returns true when there is a valid password`, () => {
   const password = 'thisisavalidpassword123';
-  assert.equal(hasPassword(password), true);
+  return hasPassword(password)
+  .then(result => assert.equal(true, result));
 });
