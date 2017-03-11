@@ -1,11 +1,12 @@
 const config = require('config');
 const mongoClient = require('mongodb');
 
-module.exports = () => {
-  let db = null;
-  mongoClient.connect(config.mongo.url)
-  .then(database => {
-    db = database;
+let database = null;
+
+exports.connect = () => {
+  mongoClient.connect(config.mongo.url, (err, db) => {
+    database = db;
   });
-  return db;
 };
+
+exports.instance = () => database;
