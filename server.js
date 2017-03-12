@@ -15,12 +15,14 @@ app.use(bodyParser.urlencoded({
 }));
 
 fs.readdir('./src/routes', (err, routes) => {
-  db.connect()
+  db.connect(config.server.mongo.url)
   .then(() => {
     _.map(routes, route => {
       require(`./src/routes/${route}`)(router);
     });
-  });
+  })
+  // eslint-disable-next-line no-console
+  .catch(() => console.error('Error connecting to database'));
 });
 
 app.use(router);

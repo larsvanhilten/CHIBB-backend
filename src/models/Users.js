@@ -11,6 +11,10 @@ exports.insertUser = (email, password, name) => {
   return db.collection(collection).insertOne(doc);
 };
 
+exports.insertAll = users => db.collection(collection).insertAll(users);
+
+exports.getUserByEmail = email => db.collection(collection).findOne({email: email});
+
 exports.getUserById = id => db.collection(collection).findOne({_id: id});
 
 exports.deleteUserById = id => db.collection(collection).findOneAndDelete({_id: id});

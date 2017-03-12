@@ -9,6 +9,11 @@
     "message": "The property '%property' is invalid.",
     "type": "invalidProperty"
   },
+  "userAlreadyExists": {
+    "code": 409,
+    "message": "A user with email '%email' does already exist.",
+    "type": "userAlreadyExists"
+  },
   "internalServerError": {
     "code": 500,
     "message": "Something went wrong on the server.",
