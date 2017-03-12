@@ -6,12 +6,14 @@ const hasEmail = require('../../../src/validators/users/hasEmail');
 it(`returns 'missingProperty' error when there is no email`, () => {
   const email = undefined;
   return hasEmail(email)
+  .then(() => {throw new Error;})
   .catch(err => assert.equal('missingProperty', err.type));
 });
 
 it(`returns 'invalidProperty' error when there is an invalid email`, () => {
   const email = 'invalid';
   return hasEmail(email)
+  .then(() => {throw new Error;})
   .catch(err => assert.equal('invalidProperty', err.type));
 });
 

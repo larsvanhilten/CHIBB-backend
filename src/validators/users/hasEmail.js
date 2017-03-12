@@ -6,11 +6,11 @@ const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]
 module.exports = email => new Promise((resolve, reject) => {
 
   if(!email) {
-    return reject(error('missingProperty'));
+    return reject(error({type: 'missingProperty', properties: {property: 'email'}}));
   }
 
   if(!emailRegex.test(email)) {
-    return reject(error('invalidProperty'));
+    return reject(error({type: 'invalidProperty', properties: {property: 'email'}}));
   }
 
   return resolve(true);
