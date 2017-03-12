@@ -9,9 +9,9 @@
     "message": "The property '%property' is invalid.",
     "type": "invalidProperty"
   },
-  "invalidServerError": {
+  "internalServerError": {
     "code": 500,
     "message": "Something went wrong on the server.",
-    "type": "invalidServerError"
+    "type": "internalServerError"
   }
 }
