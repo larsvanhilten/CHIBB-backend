@@ -1,8 +1,10 @@
 const {insertUser} = require('../../models/Users');
 const error = require('../../services/error');
+
 const hasEmail = require('../../validators/users/hasEmail');
 const hasPassword = require('../../validators/users/hasPassword');
 const hasName = require('../../validators/users/hasName');
+const doesNotExist = require('../../validators/users/doesNotExist');
 
 module.exports = (req, res) => {
   const email = req.body.email;
@@ -12,7 +14,8 @@ module.exports = (req, res) => {
   Promise.all([
     hasEmail(email),
     hasPassword(password),
-    hasName(name)
+    hasName(name),
+    doesNotExist(email)
   ])
   .then(() => {
     insertUser(email, password, name)
@@ -24,11 +27,11 @@ module.exports = (req, res) => {
       const err = error({type: 'internalServerError'});
 
       res.status(err.code);
-      res.send(err.message);
+      res.send(err);
     });
   })
   .catch(err => {
     res.status(err.code);
-    res.send(err.message);
+    res.send(err);
   });
 };
