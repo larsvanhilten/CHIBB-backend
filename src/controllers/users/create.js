@@ -1,7 +1,7 @@
 const {insertUser} = require('../../models/Users');
-const hasEmail = require('../../validators/hasEmail');
-const hasPassword = require('../../validators/hasEmail');
-const hasName = require('../../validators/hasEmail');
+const hasEmail = require('../../validators/users/hasEmail');
+const hasPassword = require('../../validators/users/hasPassword');
+const hasName = require('../../validators/users/hasName');
 
 module.exports = (req, res) => {
   const email = req.body.email;

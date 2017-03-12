@@ -1,10 +1,10 @@
 
 module.exports = router => {
 
-  router.post('/users', require('../controller/users/create.js'));
-  router.get('/users', require('../controller/users/read.js'));
-
-  router.get('/users/:id', require('../controller/users/read.js'));
-  router.put('/users/:id', require('../controller/users/update.js'));
-  router.delete('/users/:id', require('../controller/users/delete.js'));
+  router.post('/users', require('../controllers/users/create'));
+  // router.get('/users', require('../controllers/users/read'));
+  //
+  // router.get('/users/:id', require('../controllers/users/read'));
+  // router.put('/users/:id', require('../controllers/users/update'));
+  // router.delete('/users/:id', require('../controllers/users/delete'));
 };
