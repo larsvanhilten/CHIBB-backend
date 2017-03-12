@@ -3,10 +3,14 @@ const mongoClient = require('mongodb');
 
 let database = null;
 
-exports.connect = () => {
-  mongoClient.connect(config.mongo.url, (err, db) => {
+exports.connect = () => new Promise((resolve, reject) => {
+  mongoClient.connect(config.server.mongo.url, (err, db) => {
+    if(err) {
+      reject();
+    }
     database = db;
+    resolve();
   });
-};
+});
 
 exports.instance = () => database;

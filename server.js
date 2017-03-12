@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const _ = require('lodash');
+const db = require('./src/services/mongo');
 
 const app = express();
 const router = express.Router();
@@ -14,8 +15,11 @@ app.use(bodyParser.urlencoded({
 }));
 
 fs.readdir('./src/routes', (err, routes) => {
-  _.map(routes, route => {
-    require(`./src/routes/${route}`)(router);
+  db.connect()
+  .then(() => {
+    _.map(routes, route => {
+      require(`./src/routes/${route}`)(router);
+    });
   });
 });
 

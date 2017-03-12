@@ -1,4 +1,5 @@
 const {insertUser} = require('../../models/Users');
+const error = require('../../services/error');
 const hasEmail = require('../../validators/users/hasEmail');
 const hasPassword = require('../../validators/users/hasPassword');
 const hasName = require('../../validators/users/hasName');
@@ -14,7 +15,17 @@ module.exports = (req, res) => {
     hasName(name)
   ])
   .then(() => {
-    insertUser(email, password, name);
+    insertUser(email, password, name)
+    .then(result => {
+      res.status(201);
+      res.send(result.ops[0]);
+    })
+    .catch(() => {
+      const err = error({type: 'internalServerError'});
+
+      res.status(err.code);
+      res.send(err.message);
+    });
   })
   .catch(err => {
     res.status(err.code);
