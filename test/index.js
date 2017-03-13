@@ -7,6 +7,9 @@ const importTest = (name, path) => {
 };
 
 describe('Validators', () => {
+  describe('shared', () => {
+    importTest('hasId', './validators/shared/hasId');
+  });
   describe('users', () => {
     importTest('hasEmail', './validators/users/hasEmail');
     importTest('hasName', './validators/users/hasName');
