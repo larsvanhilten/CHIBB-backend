@@ -24,11 +24,11 @@ module.exports = (req, res) => {
       const err = error({type: 'internalServerError'});
 
       res.status(err.code);
-      res.send(err.message);
+      res.send(err);
     });
   })
   .catch(err => {
     res.status(err.code);
-    res.send(err.message);
+    res.send(err);
   });
 };
