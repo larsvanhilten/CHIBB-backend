@@ -19,6 +19,11 @@
     "message": "The user with property '%property' does not exist.",
     "type": "userDoesNotExist"
   },
+  "invalidCredentials" : {
+    "code": 400,
+    "message": "Invalid email and/or password.",
+    "type": "invalidCredentials"
+  },
   "internalServerError": {
     "code": 500,
     "message": "Something went wrong on the server.",
