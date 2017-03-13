@@ -26,7 +26,7 @@ fs.readdir('./src/routes', (err, routes) => {
     });
   })
   // eslint-disable-next-line no-console
-  .catch(() => console.error('Error connecting to database'));
+  .catch(err => console.error(`Error connecting to database: ${err}`));
 });
 
 app.use(router);

@@ -1,4 +1,5 @@
 const error = require('../../services/error');
+const passwordRegex = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
 
 module.exports = password => new Promise((resolve, reject) => {
 
@@ -6,7 +7,7 @@ module.exports = password => new Promise((resolve, reject) => {
     return reject(error({type: 'missingProperty', properties: {property: 'password'}}));
   }
 
-  if(password.length !== 60) {
+  if(!passwordRegex.test(password)) {
     return reject(error({type: 'invalidProperty', properties: {property: 'password'}}));
   }
 
