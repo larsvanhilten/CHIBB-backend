@@ -14,6 +14,11 @@
     "message": "A user with email '%email' does already exist.",
     "type": "userAlreadyExists"
   },
+  "userDoesNotExist": {
+    "code": 404,
+    "message": "The user with property '%property' does not exist.",
+    "type": "userDoesNotExist"
+  },
   "internalServerError": {
     "code": 500,
     "message": "Something went wrong on the server.",

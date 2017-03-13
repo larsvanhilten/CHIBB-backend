@@ -14,6 +14,10 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+process.on('unhandledRejection', reason => {
+  console.log(`reason: ${reason}`);
+});
+
 fs.readdir('./src/routes', (err, routes) => {
   db.connect(config.server.mongo.url)
   .then(() => {

@@ -1,31 +1,36 @@
 const {deleteUserById} = require('../../models/Users');
 const error = require('../../services/error');
+const hasId = require('../../validators/shared/hasId');
 
 
 module.exports = (req, res) => {
-  const id = req.body.id;
+  const id = req.params.id;
 
 
   Promise.all([
-    hasEmail(email),
-    hasPassword(password),
-    hasName(name)
+    hasId(id)
   ])
   .then(() => {
     deleteUserById(id)
     .then(result => {
-      res.status(201);
-      res.send(result.ops[0]);
+      if(!result.value) {
+        const err = error({type: 'userDoesNotExist'});
+        res.status(err.code);
+        res.send(err);
+      }else {
+        res.status(201);
+        res.send({success: true});
+      }
+
     })
     .catch(() => {
       const err = error({type: 'internalServerError'});
-
       res.status(err.code);
-      res.send(err.message);
+      res.send(err);
     });
   })
   .catch(err => {
     res.status(err.code);
-    res.send(err.message);
+    res.send(err);
   });
 };

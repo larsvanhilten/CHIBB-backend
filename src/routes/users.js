@@ -6,5 +6,5 @@ module.exports = router => {
   //
   // router.get('/users/:id', require('../controllers/users/read'));
   // router.put('/users/:id', require('../controllers/users/update'));
-  // router.delete('/users/:id', require('../controllers/users/delete'));
+  router.delete('/users/:id', require('../controllers/users/delete'));
 };
