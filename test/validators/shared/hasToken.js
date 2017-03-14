@@ -11,7 +11,7 @@ it(`returns 'missingProperty' error when there is no token`, () => {
   .catch(err => assert.equal('missingProperty', err.type));
 });
 
-it(`returns true  when there is a valid id`, () => {
+it(`returns true  when there is a valid token`, () => {
 
   const token = jwt.sign('lars@lars.com', 'Lars');
   return hasToken(token)
