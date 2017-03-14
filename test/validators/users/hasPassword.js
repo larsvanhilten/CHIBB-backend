@@ -18,7 +18,7 @@ it(`returns 'invalidProperty' error when the passwordhash is not 60 characters l
 });
 
 it(`returns true when there is a valid password`, () => {
-  const password = '$2a$10$KssILxWNR6k62B7yiX0GAe2Q7wwHlrzhF3LqtVvpyvHZf0MwvNfVu';
+  const password = 'Larslars123';
   return hasPassword(password)
   .then(result => assert.equal(true, result));
 });
