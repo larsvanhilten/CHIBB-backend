@@ -13,7 +13,7 @@ module.exports = name => new Promise((resolve, reject) => {
   }
 
   if(name.length < 3 || name.length > 20) {
-    return reject(error('invalidProperty'));
+    return reject(error({type: 'invalidProperty', properties: {property: 'name'}}));
   }
 
   return resolve(true);
