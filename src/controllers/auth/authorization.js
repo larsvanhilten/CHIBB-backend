@@ -4,7 +4,6 @@ const hasToken = require('../../validators/shared/hasToken');
 module.exports = (req, res) => {
 
   const token = req.headers.authorization;
-  console.log(token);
 
   Promise.all([
     hasToken(token),
