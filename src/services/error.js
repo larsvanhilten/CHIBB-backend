@@ -3,9 +3,9 @@ const _ = require('lodash');
 
 module.exports = failure => {
   if(errors[failure.type]) {
-    const error = errors[failure.type];
+    const error = _.clone(errors[failure.type]);
     _.map(failure.properties, (v, k) => {
-      error.message = error.message.replace(`%${k}`, v);
+      error.message = _.replace(error.message, `%${k}`, v);
     });
     return error;
   }
