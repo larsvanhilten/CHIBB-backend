@@ -3,7 +3,6 @@
 const assert = require('assert');
 const doesNotExist = require('../../../src/validators/users/doesNotExist');
 
-
 it(`returns 'userAlreadyExists' error when there is an invalid email`, () => {
   const email = 'existing@test.com';
   return doesNotExist(email)

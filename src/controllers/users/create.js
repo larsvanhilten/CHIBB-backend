@@ -1,10 +1,4 @@
-const {insertUser} = require('../../models/Users');
 const error = require('../../services/error');
-
-const hasEmail = require('../../validators/users/hasEmail');
-const hasPassword = require('../../validators/users/hasPassword');
-const hasName = require('../../validators/users/hasName');
-const doesNotExist = require('../../validators/users/doesNotExist');
 
 module.exports = (req, res) => {
   const email = req.body.email;
@@ -12,13 +6,13 @@ module.exports = (req, res) => {
   const name = req.body.name;
 
   Promise.all([
-    hasEmail(email),
-    hasPassword(password),
-    hasName(name),
-    doesNotExist(email)
+    req.users.hasEmail(email),
+    req.users.hasPassword(password),
+    req.users.hasName(name),
+    req.users.doesNotExist(email)
   ])
   .then(() => {
-    insertUser(email, password, name)
+    req.users.insertUser(email, password, name)
     .then(result => {
       res.status(201);
       res.send(result.ops[0]);

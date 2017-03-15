@@ -1,22 +1,96 @@
-const db = require('../services/mongo').instance();
 const collection = 'users';
+const error = require('../services/error');
 
-exports.insertUser = (email, password, name) => {
-  const doc = {
-    email: email,
-    password: password,
-    name: name
-  };
+module.exports = class Users {
 
-  return db.collection(collection).insertOne(doc);
+  static init(db) {
+    this.db = db;
+    this.collection = this.db.collection(collection);
+  }
+
+  static insertAll(users) {
+    return this.collection.insertAll(users);
+  }
+  static getUserByEmail(email) {
+    return this.collection.findOne({email: email});
+  }
+  static getUserById(id) {
+    return this.collection.findOne({_id: id});
+  }
+  static deleteUserById(id) {
+    return this.collection.findOneAndDelete({_id: id});
+  }
+  static insertUser(email, password, name) {
+    const doc = {
+      email: email,
+      password: password,
+      name: name
+    };
+
+    return this.collection.insertOne(doc);
+  }
+
+  static hasEmail(email) {
+    // eslint-disable-next-line max-len
+    const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+
+    return new Promise((resolve, reject) => {
+
+      if(!email) {
+        return reject(error({type: 'missingProperty', properties: {property: 'email'}}));
+      }
+
+      if(!emailRegex.test(email)) {
+        return reject(error({type: 'invalidProperty', properties: {property: 'email'}}));
+      }
+
+      return resolve(true);
+    });
+  }
+  static hasName(name) {
+    const nameRegex = /\d/;
+
+    return new Promise((resolve, reject) => {
+
+      if(!name) {
+        return reject(error({type: 'missingProperty', properties: {property: 'name'}}));
+      }
+
+      if(nameRegex.test(name)) {
+        return reject(error({type: 'invalidProperty', properties: {property: 'name'}}));
+      }
+
+      if(name.length < 3 || name.length > 20) {
+        return reject(error('invalidProperty'));
+      }
+
+      return resolve(true);
+    });
+  }
+  static hasPassword(password) {
+    return new Promise((resolve, reject) => {
+
+      if(!password) {
+        return reject(error({type: 'missingProperty', properties: {property: 'password'}}));
+      }
+
+      if(password.length !== 60) {
+        return reject(error({type: 'invalidProperty', properties: {property: 'password'}}));
+      }
+
+      return resolve(true);
+    });
+  }
+  static doesNotExist(email) {
+    return new Promise((resolve, reject) => this.collection.findOne({email: email})
+    .then(doc => {
+      if(!doc) {
+        resolve(true);
+      }else {
+        reject(error({type: 'userAlreadyExists', properties: {email: 'email'}}));
+      }
+    })
+    .catch(() => reject(error({type: 'internalServerError'})))
+    );
+  }
 };
-
-exports.insertAll = users => db.collection(collection).insertAll(users);
-
-exports.getUserByEmail = email => db.collection(collection).findOne({email: email});
-
-exports.getUserById = id => db.collection(collection).findOne({_id: id});
-
-exports.deleteUserById = id => db.collection(collection).findOneAndDelete({_id: id});
-
-

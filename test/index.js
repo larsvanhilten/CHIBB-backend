@@ -1,22 +1,25 @@
-/* global  describe */
+/* global  describe, before, req */
 
 const config = require('config');
 const db = require('../src/services/mongo');
-
-db.connect(config.server.mongo.url)
-.then(() => {
-  console.log('connected');
-})
-// eslint-disable-next-line no-console
-.catch(() => console.error('Error connecting to database'));
+const Users = require('../src/models/Users');
 
 const importTest = (name, path) => {
   describe(name, () => {
-    require(path);
+    require(path)();
   });
 };
 
 describe('Validators', () => {
+
+  before('connect to MongoDB', done => {
+    db.connect(config.server.mongo.url)
+    .then(db => {
+      req.users = new Users(db);
+      done();
+    });
+  });
+
   describe('users', () => {
     importTest('hasEmail', './validators/users/hasEmail');
     importTest('hasName', './validators/users/hasName');
