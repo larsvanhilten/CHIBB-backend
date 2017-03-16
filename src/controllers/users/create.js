@@ -1,42 +1,28 @@
-const {insertUser} = require('../../models/Users');
-const bcrypt = require('bcrypt');
-const config = require('config');
 const error = require('../../services/error');
-const hasEmail = require('../../validators/users/hasEmail');
-const hasPassword = require('../../validators/users/hasPassword');
-const hasName = require('../../validators/users/hasName');
 
 module.exports = (req, res) => {
-  const email = req.body.email;
+  const email = req.body.email.toLowerCase();
   const password = req.body.password;
   const name = req.body.name;
 
   Promise.all([
-    hasEmail(email),
-    hasPassword(password),
-    hasName(name)
+    req.users.hasEmail(email),
+    req.users.hasPassword(password),
+    req.users.hasName(name),
+    req.users.doesNotExist(email)
   ])
   .then(() => {
-    bcrypt.hash(password, config.server.bcrypt.saltRounds)
-    .then(hash => {
-      insertUser(email, hash, name)
-      .then(result => {
-        delete result.ops[0].password;
-        res.status(201);
-        res.send(result.ops[0]);
-      })
-      .catch(() => {
-        const err = error({type: 'internalServerError'});
-        res.status(err.code);
-        res.send(err);
-      });
+    req.users.insert(email, password, name)
+    .then(result => {
+      delete result.ops[0].password;
+      res.status(201);
+      res.send(result.ops[0]);
     })
     .catch(() => {
       const err = error({type: 'internalServerError'});
       res.status(err.code);
       res.send(err);
-    }
-    );
+    });
   })
   .catch(err => {
     res.status(err.code);

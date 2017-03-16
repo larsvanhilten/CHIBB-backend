@@ -1,20 +1,17 @@
 const bcrypt = require('bcrypt');
 const jwt = require('../../services/jwt');
-const {getUserByEmail} = require('../../models/Users');
 const error = require('../../services/error');
-const hasEmail = require('../../validators/users/hasEmail');
-const hasPassword = require('../../validators/users/hasPassword');
 
 module.exports = (req, res) => {
-  const email = req.body.email;
+  const email = req.body.email.toLowerCase();
   const password = req.body.password;
 
   Promise.all([
-    hasEmail(email),
-    hasPassword(password),
+    req.users.hasEmail(email),
+    req.users.hasPassword(password),
   ])
   .then(() => {
-    getUserByEmail(email)
+    req.users.getByEmail(email)
     .then(result => {
       if(!result) {
         const err = error({type: 'invalidCredentials'});

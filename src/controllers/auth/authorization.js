@@ -1,12 +1,11 @@
 const jwt = require('../../services/jwt');
-const hasToken = require('../../validators/shared/hasToken');
 
 module.exports = (req, res) => {
 
   const token = req.headers.authorization;
 
   Promise.all([
-    hasToken(token),
+    req.users.hasToken(token)
   ])
   .then(() => {
     jwt.authorize(token)
