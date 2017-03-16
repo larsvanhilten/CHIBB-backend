@@ -11,16 +11,17 @@ module.exports = class Users {
   static insertAll(users) {
     return this.collection.insertAll(users);
   }
-  static getUserByEmail(email) {
+  static getByEmail(email) {
     return this.collection.findOne({email: email});
   }
-  static getUserById(id) {
+  static getById(id) {
     return this.collection.findOne({_id: id});
   }
-  static deleteUserById(id) {
-    return this.collection.findOneAndDelete({_id: id});
+  static removeByEmail(email) {
+    return this.collection.findOneAndDelete({email: email});
   }
-  static insertUser(email, password, name) {
+
+  static insert(email, password, name) {
     const doc = {
       email: email,
       password: password,

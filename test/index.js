@@ -1,31 +1,37 @@
-/* global  describe, before, req */
+/* global  describe, before */
 
 const config = require('config');
-const db = require('../src/services/mongo');
-const Users = require('../src/models/Users');
+const database = require('../src/services/mongo');
+const fixtures = require('../fixtures');
 
 const importTest = (name, path) => {
   describe(name, () => {
-    require(path)();
+    require(path);
   });
 };
 
-describe('Validators', () => {
+const cleanup = db => {
+  db.dropDatabase('chibb-test')
+  .catch(err => {console.error(err);});
+  db.close();
+};
 
-  before('connect to MongoDB', done => {
-    db.connect(config.server.mongo.url)
-    .then(db => {
-      req.users = new Users(db);
-      done();
-    });
-  });
-
-  describe('users', () => {
-    importTest('hasEmail', './validators/users/hasEmail');
-    importTest('hasName', './validators/users/hasName');
-    importTest('hasPassword', './validators/users/hasPassword');
-    importTest('doesNotExist', './validators/users/doesNotExist');
-  });
+before('Set up fixtures', done => {
+  database.connect(config.test.mongo.url)
+  .then(db => {
+    process.on('exit', () => cleanup(db));
+    process.on('SIGINT', () => cleanup(db));
+    process.on('SIGTERM', () => cleanup(db));
+    Promise.all([
+      fixtures.insertUsers(db)
+    ])
+    .then(() => done())
+    .catch(err => {console.error(err);});
+  })
+  .catch(err => {console.error(err);});
 });
 
+describe('Models', () => {
+  importTest('Users', './models/Users');
 
+});
