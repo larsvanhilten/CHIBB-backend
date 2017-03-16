@@ -1,7 +1,7 @@
 const error = require('../../services/error');
 
 module.exports = (req, res) => {
-  const email = req.body.email;
+  const email = req.body.email.toLowerCase();
   const password = req.body.password;
   const name = req.body.name;
 
@@ -12,14 +12,14 @@ module.exports = (req, res) => {
     req.users.doesNotExist(email)
   ])
   .then(() => {
-    req.users.insertUser(email, password, name)
+    req.users.insert(email, password, name)
     .then(result => {
+      delete result.ops[0].password;
       res.status(201);
       res.send(result.ops[0]);
     })
     .catch(() => {
       const err = error({type: 'internalServerError'});
-
       res.status(err.code);
       res.send(err);
     });

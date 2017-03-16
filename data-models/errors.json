@@ -11,8 +11,18 @@
   },
   "userAlreadyExists": {
     "code": 409,
-    "message": "A user with email '%email' does already exist.",
+    "message": "A user with this '%property' does already exist.",
     "type": "userAlreadyExists"
+  },
+  "userDoesNotExist": {
+    "code": 404,
+    "message": "No user found with this %property.",
+    "type": "userDoesNotExist"
+  },
+  "invalidCredentials" : {
+    "code": 400,
+    "message": "Invalid email and/or password.",
+    "type": "invalidCredentials"
   },
   "internalServerError": {
     "code": 500,

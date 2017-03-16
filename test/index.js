@@ -12,7 +12,7 @@ const importTest = (name, path) => {
 
 const cleanup = db => {
   db.dropDatabase('chibb-test')
-  .catch(err => {console.error(err);});
+  .catch(console.error);
   db.close();
 };
 
@@ -26,9 +26,9 @@ before('Set up fixtures', done => {
       fixtures.insertUsers(db)
     ])
     .then(() => done())
-    .catch(err => {console.error(err);});
+    .catch(console.error);
   })
-  .catch(err => {console.error(err);});
+  .catch(console.error);
 });
 
 describe('Models', () => {

@@ -9,10 +9,12 @@
     "test": "mocha"
   },
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
     "config": "^1.25.1",
     "express": "^4.15.2",
     "fs": "0.0.1-security",
+    "jsonwebtoken": "^7.3.0",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.24"
   },

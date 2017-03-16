@@ -4,6 +4,7 @@ const assert = require('assert');
 const config = require('config');
 const database = require('../../src/services/mongo');
 const Users = require('../../src/models/Users');
+const jwt = require('../../src/services/jwt');
 
 let connection;
 
@@ -46,7 +47,7 @@ describe('hasPassword', () => {
     .catch(err => assert.equal('missingProperty', err.type));
   });
 
-  it(`returns 'invalidProperty' error when the passwordhash is not 60 characters long`, () => {
+  it(`returns 'invalidProperty' error when the passwordis not according to format`, () => {
     const password = 'invalidpassword';
     return Users.hasPassword(password)
     .then(() => {throw new Error;})
@@ -54,7 +55,7 @@ describe('hasPassword', () => {
   });
 
   it(`returns true when there is a valid password`, () => {
-    const password = '$2a$10$KssILxWNR6k62B7yiX0GAe2Q7wwHlrzhF3LqtVvpyvHZf0MwvNfVu';
+    const password = 'Larslars123';
     return Users.hasPassword(password)
     .then(result => assert.equal(true, result));
   });
@@ -93,6 +94,43 @@ describe('doesNotExist', () => {
   it(`returns true when the email does not already exist`, () => {
     const email = 'notexisting@test.com';
     return Users.doesNotExist(email)
+    .then(result => assert.equal(true, result));
+  });
+});
+
+describe('hasId', () => {
+  it(`returns 'missingProperty' error when there is no id`, () => {
+    const id = undefined;
+    return Users.hasId(id)
+    .then(() => {throw new Error;})
+    .catch(err => assert.equal('missingProperty', err.type));
+  });
+
+  it(`returns 'invalidProperty' error when there is an invalid id`, () => {
+    const id = 'invalid';
+    return Users.hasId(id)
+    .then(() => {throw new Error;})
+    .catch(err => assert.equal('invalidProperty', err.type));
+  });
+
+  it(`returns true  when there is a valid email`, () => {
+    const id = '58c5622a434bd90a2d888a98';
+    return Users.hasId(id)
+    .then(result => assert.equal(true, result));
+  });
+});
+
+describe('hasToken', () => {
+  it(`returns 'missingProperty' error when there is no token`, () => {
+    const token = undefined;
+    return Users.hasToken(token)
+    .then(() => {throw new Error;})
+    .catch(err => assert.equal('missingProperty', err.type));
+  });
+
+  it(`returns true  when there is a valid token`, () => {
+    const token = jwt.sign('lars@lars.com', 'Lars');
+    return Users.hasToken(token)
     .then(result => assert.equal(true, result));
   });
 });
