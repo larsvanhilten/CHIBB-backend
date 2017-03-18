@@ -28,5 +28,10 @@
     "code": 500,
     "message": "Something went wrong on the server.",
     "type": "internalServerError"
+  },
+  "unauthorized": {
+    "code": 401,
+    "message": "You're not authorized to make this request.",
+    "type": "unauthorized"
   }
 }

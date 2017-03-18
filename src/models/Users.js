@@ -12,6 +12,7 @@ module.exports = class Users {
     this.collection = this.db.collection(collection);
   }
 
+  //  Queries
   static insertAll(users) {
     return this.collection.insertAll(users);
   }
@@ -43,6 +44,8 @@ module.exports = class Users {
       .catch(() => reject());
     });
   }
+
+  //  Validations
   static hasEmail(email) {
     // eslint-disable-next-line max-len
     const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;

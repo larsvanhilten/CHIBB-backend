@@ -33,5 +33,9 @@ before('Set up fixtures', done => {
 
 describe('Models', () => {
   importTest('Users', './models/Users');
+});
 
+describe('Middleware', () => {
+  importTest('isMe', './middleware/isMe');
+  importTest('isUser', './middleware/isUser');
 });
