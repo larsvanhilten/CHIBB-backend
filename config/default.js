@@ -1,6 +1,7 @@
 module.exports = {
   server: {
     http: {
+      cors: true,
       port: process.env.PORT || 3000
     },
     bcrypt: {

@@ -1,5 +1,6 @@
 const config = require('config');
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const _ = require('lodash');
@@ -8,6 +9,10 @@ const Users = require('./src/models/Users');
 
 const app = express();
 const router = express.Router();
+
+if(config.server.http.cors) {
+  app.use(cors());
+}
 
 app.use(bodyParser.json());
 // to support URL-encoded bodies
