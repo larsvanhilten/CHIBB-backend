@@ -7,8 +7,7 @@ module.exports = (req, res) => {
   const password = req.body.password;
 
   Promise.all([
-    req.users.hasEmail(email),
-    req.users.hasPassword(password),
+
   ])
   .then(() => {
     req.users.getByEmail(email)
