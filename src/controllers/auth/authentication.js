@@ -27,7 +27,7 @@ module.exports = (req, res) => {
           }else {
             const err = error({type: 'invalidCredentials'});
             res.status(err.code);
-            res.send({err});
+            res.send(err);
           }
         });
       }
