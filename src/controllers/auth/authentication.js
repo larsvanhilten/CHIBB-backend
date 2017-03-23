@@ -20,9 +20,10 @@ module.exports = (req, res) => {
       }else {
         bcrypt.compare(password, result.password).then(correctPassword => {
           if(correctPassword) {
-            const token = jwt.sign(result._id, result.email, result.name);
+            delete result.password;
+            result.token = jwt.sign(result._id, result.email, result.name);
             res.status(202);
-            res.send({token: token});
+            res.send(result);
           }else {
             const err = error({type: 'invalidCredentials'});
             res.status(err.code);
