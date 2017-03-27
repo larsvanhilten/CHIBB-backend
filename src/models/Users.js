@@ -16,6 +16,9 @@ module.exports = class Users {
   static insertAll(users) {
     return this.collection.insertAll(users);
   }
+  static getAll() {
+    return this.collection.find().toArray();
+  }
   static getByEmail(email) {
     return this.collection.findOne({email: email});
   }
