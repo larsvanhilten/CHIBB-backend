@@ -35,7 +35,8 @@ module.exports = class Users {
         const doc = {
           email: email,
           password: hash,
-          name: name
+          name: name,
+          role: 'user'
         };
         this.collection.insertOne(doc)
         .then(result => resolve(result))
