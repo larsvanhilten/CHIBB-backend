@@ -20,7 +20,7 @@ module.exports = (req, res) => {
         bcrypt.compare(password, result.password).then(correctPassword => {
           if(correctPassword) {
             delete result.password;
-            result.token = jwt.sign(result._id, result.email, result.name);
+            result.token = jwt.sign(result._id, result.email, result.name, result.role);
             res.status(202);
             res.send(result);
           }else {

@@ -1,12 +1,11 @@
 /* global it */
 
-const isMe = require('../../src/middleware/isMe');
+const isAdmin = require('../../src/middleware/isAdmin');
 const jwt = require('../../src/services/jwt');
 
 const req = {};
 req.headers = {};
 req.headers.authorization = undefined;
-req.params = {};
 
 const res = {};
 res.status = () => {};
@@ -18,28 +17,26 @@ it(`Returns an error when there is no token provided`, done => {
     done();
   };
 
-  isMe(req, res, null);
+  isAdmin(req, res, null);
 });
 
-it(`Returns an error when the id in the token differs from the requested id`, done => {
+it(`Returns an error when the user is not an admin`, done => {
   req.headers.authorization = jwt.sign('420', 'test@chibb.com', 'Test', 'User');
-  req.params.id = '69';
 
   res.send = () => {
     done();
   };
 
-  isMe(req, res, null);
+  isAdmin(req, res, null);
 });
 
 it(`Continues when a valid token is provided`, done => {
-  req.headers.authorization = jwt.sign('420', 'test@chibb.com', 'Test', 'User');
-  req.params.id = '420';
+  req.headers.authorization = jwt.sign('420', 'test@chibb.com', 'Test', 'Admin');
 
   const next = () => {
     done();
   };
 
-  isMe(req, res, next);
+  isAdmin(req, res, next);
 });
 

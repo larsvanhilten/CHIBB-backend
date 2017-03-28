@@ -38,4 +38,5 @@ describe('Models', () => {
 describe('Middleware', () => {
   importTest('isMe', './middleware/isMe');
   importTest('isUser', './middleware/isUser');
+  importTest('isAdmin', './middleware/isAdmin');
 });

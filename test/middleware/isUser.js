@@ -20,7 +20,7 @@ it(`Returns an error when there is no token provided`, done => {
 });
 
 it(`Continues when a valid token is provided`, done => {
-  req.headers.authorization = jwt.sign('420', 'test@chibb.com', 'Test');
+  req.headers.authorization = jwt.sign('420', 'test@chibb.com', 'Test', 'User');
 
   const next = () => {
     done();
