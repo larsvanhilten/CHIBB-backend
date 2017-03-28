@@ -13,9 +13,6 @@ module.exports = class Users {
   }
 
   //  Queries
-  static insertAll(users) {
-    return this.collection.insertAll(users);
-  }
   static getAll() {
     return this.collection.find().toArray();
   }
@@ -24,6 +21,18 @@ module.exports = class Users {
   }
   static getById(id) {
     return this.collection.findOne({_id: ObjectId(id)});
+  }
+  static update(id, updated) {
+    return new Promise((resolve, reject) => {
+      this.getById(id)
+      .then(old => {
+        const user = _.assign(old, updated);
+        this.collection.findOneAndReplace({_id: ObjectId(id)}, user, {returnOriginal: false})
+        .then(updatedUser => resolve(updatedUser.value))
+        .catch(err => reject(err));
+      })
+      .catch(err => reject(err));
+    });
   }
   static removeByEmail(email) {
     return this.collection.findOneAndDelete({email: email});
@@ -39,7 +48,7 @@ module.exports = class Users {
           email: email,
           password: hash,
           name: name,
-          role: 'user'
+          role: 'Admin'
         };
         this.collection.insertOne(doc)
         .then(result => resolve(result))
@@ -48,7 +57,9 @@ module.exports = class Users {
       .catch(() => reject());
     });
   }
-
+  static insertAll(users) {
+    return this.collection.insertAll(users);
+  }
   //  Validations
   static hasEmail(email) {
     // eslint-disable-next-line max-len

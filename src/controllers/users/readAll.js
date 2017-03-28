@@ -7,7 +7,6 @@ module.exports = (req, res) => {
 
   ])
   .then(() => {
-    console.log('topkek');
     req.users.getAll()
     .then(users => {
       _.map(users, user => {
