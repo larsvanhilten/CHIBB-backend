@@ -1,7 +1,7 @@
 const error = require('../../services/error');
 
 module.exports = (req, res) => {
-  const email = req.body.email.toLowerCase();
+  const email = String(req.body.email).toLowerCase();
   const password = req.body.password;
   const name = req.body.name;
 
