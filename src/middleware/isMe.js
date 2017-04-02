@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
 
   authorize(token)
   .then(decoded => {
-    if(decoded.id === req.params.id) {
+    if(decoded.id === req.params.id || decoded.role === 'Admin') {
       next();
     }else{
       const err = error({type: 'unauthorized'});

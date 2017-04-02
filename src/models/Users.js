@@ -26,7 +26,7 @@ module.exports = class Users {
     return new Promise((resolve, reject) => {
       this.getById(id)
       .then(old => {
-        const user = _.assign(old, updated);
+        const user = _.assign(old, _.omitBy(updated, _.isNil));
         this.collection.findOneAndReplace({_id: ObjectId(id)}, user, {returnOriginal: false})
         .then(updatedUser => resolve(updatedUser.value))
         .catch(err => reject(err));
@@ -48,7 +48,7 @@ module.exports = class Users {
           email: email,
           password: hash,
           name: name,
-          role: 'Admin'
+          role: 'User'
         };
         this.collection.insertOne(doc)
         .then(result => resolve(result))

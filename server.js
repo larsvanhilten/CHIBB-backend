@@ -6,6 +6,7 @@ const fs = require('fs');
 const _ = require('lodash');
 const db = require('./src/services/mongo');
 const Users = require('./src/models/Users');
+const getUser = require('./src/middleware/getUser');
 
 const app = express();
 const router = express.Router();
@@ -19,6 +20,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+app.use(getUser);
 
 process.on('unhandledRejection', reason => {
   // eslint-disable-next-line no-console
