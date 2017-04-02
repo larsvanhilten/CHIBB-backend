@@ -1,9 +1,10 @@
 const bcrypt = require('bcrypt');
 const jwt = require('../../services/jwt');
 const error = require('../../services/error');
+const _ = require('lodash');
 
 module.exports = (req, res) => {
-  const email = req.body.email.toLowerCase();
+  const email = _.lowerCase(req.body.email);
   const password = req.body.password;
 
   Promise.all([
