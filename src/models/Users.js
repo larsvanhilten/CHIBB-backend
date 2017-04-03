@@ -24,11 +24,15 @@ module.exports = class Users {
   }
   static update(id, updated) {
     return new Promise((resolve, reject) => {
-      this.getById(id)
-      .then(old => {
-        const user = _.assign(old, _.omitBy(updated, _.isNil));
-        this.collection.findOneAndReplace({_id: ObjectId(id)}, user, {returnOriginal: false})
-        .then(updatedUser => resolve(updatedUser.value))
+      this.checkUser(updated)
+      .then(() => {
+        this.getById(id)
+        .then(old => {
+          const user = _.assign(old, updated);
+          this.collection.findOneAndReplace({_id: ObjectId(id)}, user, {returnOriginal: false})
+          .then(updatedUser => resolve(updatedUser.value))
+          .catch(err => reject(err));
+        })
         .catch(err => reject(err));
       })
       .catch(err => reject(err));
@@ -61,6 +65,45 @@ module.exports = class Users {
     return this.collection.insertAll(users);
   }
   //  Validations
+  static checkUser(user) {
+    return new Promise((resolve, reject) => {
+      let resolveCounter = 0;
+      const propertyCount = Object.keys(user).length;
+      const checkResolve = () => {
+        resolveCounter++;
+        if(resolveCounter === propertyCount) {
+          resolve();
+        }
+      };
+      _.forIn(user, (value, key) => {
+        switch(key) {
+          case 'name':
+            this.hasName(value)
+            .then(() => checkResolve())
+            .catch(err => reject(err));
+            break;
+          case 'email':
+            this.hasEmail(value)
+            .then(() => checkResolve())
+            .catch(err => reject(err));
+            break;
+          case 'password':
+            this.hasPassword(value)
+            .then(() => checkResolve())
+            .catch(err => reject(err));
+            break;
+          case 'role':
+            this.hasRole(value)
+            .then(() => checkResolve())
+            .catch(err => reject(err));
+            break;
+          default:
+            reject();
+            break;
+        }
+      });
+    });
+  }
   static hasEmail(email) {
     // eslint-disable-next-line max-len
     const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
@@ -133,6 +176,20 @@ module.exports = class Users {
 
       if(id.length !== 24) {
         return reject(error({type: 'invalidProperty', properties: {property: 'id'}}));
+      }
+
+      return resolve(true);
+    });
+  }
+  static hasRole(role) {
+    return new Promise((resolve, reject) => {
+
+      if(!role) {
+        return reject(error({type: 'missingProperty', properties: {property: 'role'}}));
+      }
+
+      if(role !== 'User' && role !== 'Admin') {
+        return reject(error({type: 'invalidProperty', properties: {property: 'role'}}));
       }
 
       return resolve(true);

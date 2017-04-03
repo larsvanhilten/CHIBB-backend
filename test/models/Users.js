@@ -113,9 +113,31 @@ describe('hasId', () => {
     .catch(err => assert.equal('invalidProperty', err.type));
   });
 
-  it(`returns true  when there is a valid email`, () => {
+  it(`returns true  when there is a valid id`, () => {
     const id = '58c5622a434bd90a2d888a98';
     return Users.hasId(id)
+    .then(result => assert.equal(true, result));
+  });
+});
+
+describe('hasRole', () => {
+  it(`returns 'missingProperty' error when there is no role`, () => {
+    const role = undefined;
+    return Users.hasRole(role)
+    .then(() => {throw new Error;})
+    .catch(err => assert.equal('missingProperty', err.type));
+  });
+
+  it(`returns 'invalidProperty' error when there is an invalid role`, () => {
+    const role = 'invalid';
+    return Users.hasRole(role)
+    .then(() => {throw new Error;})
+    .catch(err => assert.equal('invalidProperty', err.type));
+  });
+
+  it(`returns true when there is a valid role`, () => {
+    const role = 'User';
+    return Users.hasRole(role)
     .then(result => assert.equal(true, result));
   });
 });
