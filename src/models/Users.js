@@ -28,6 +28,9 @@ module.exports = class Users {
       .then(() => {
         this.getById(id)
         .then(old => {
+          if(updated.password) {
+            updated.password = bcrypt.hashSync(updated.password, config.server.bcrypt.saltRounds);
+          }
           const user = _.assign(old, updated);
           this.collection.findOneAndReplace({_id: ObjectId(id)}, user, {returnOriginal: false})
           .then(updatedUser => resolve(updatedUser.value))
