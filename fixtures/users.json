@@ -1,7 +1,14 @@
 [
   {
-    "email": "existing@test.com",
+    "email": "admin@chibb.com",
     "password": "$2a$10$KssILxWNR6k62B7yiX0GAe2Q7wwHlrzhF3LqtVvpyvHZf0MwvNfVu",
-    "name": "Test"
+    "name": "Admin",
+    "role": "Admin"
+  },
+  {
+    "email": "user@chibb.com",
+    "password": "$2a$10$KssILxWNR6k62B7yiX0GAe2Q7wwHlrzhF3LqtVvpyvHZf0MwvNfVu",
+    "name": "User",
+    "role": "User"
   }
 ]
