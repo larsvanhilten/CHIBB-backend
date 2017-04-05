@@ -15,7 +15,7 @@ module.exports = (req, res) => {
       res.send(decoded);
     })
     .catch(() => {
-      res.status(404);
+      res.status(401);
       res.send({authenticated: false});
     });
   })
