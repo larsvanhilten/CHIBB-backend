@@ -85,14 +85,14 @@ describe('hasName', () => {
 
 describe('doesNotExist', () => {
   it(`returns 'userAlreadyExists' error when there is an invalid email`, () => {
-    const email = 'existing@test.com';
+    const email = 'user@chibb.com';
     return Users.doesNotExist(email)
     .then(() => {throw new Error;})
     .catch(err => assert.equal('userAlreadyExists', err.type));
   });
 
   it(`returns true when the email does not already exist`, () => {
-    const email = 'notexisting@test.com';
+    const email = 'notexisting@lars.com';
     return Users.doesNotExist(email)
     .then(result => assert.equal(true, result));
   });
