@@ -30,7 +30,7 @@
     "type": "internalServerError"
   },
   "unauthorized": {
-    "code": 401,
+    "code": 403,
     "message": "You're not authorized to make this request.",
     "type": "unauthorized"
   }
