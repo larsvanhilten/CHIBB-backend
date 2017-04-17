@@ -5,7 +5,10 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const _ = require('lodash');
 const db = require('./src/services/mongo');
+
 const Users = require('./src/models/Users');
+const Sensor = require('./src/models/Sensor');
+
 const getUser = require('./src/middleware/getUser');
 
 const app = express();
@@ -35,6 +38,10 @@ fs.readdir('./src/routes', (err, routes) => {
       req.db = db;
       req.users = Users;
       req.users.init(db);
+
+      req.sensor = Sensor;
+      req.sensor.init(db);
+
       next();
     });
     _.forEach(routes, route => {
