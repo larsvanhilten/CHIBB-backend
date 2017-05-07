@@ -11,8 +11,17 @@ module.exports = class Users {
   }
 
   //  Queries
-  static read(type) {
-    return this.collection.find({type: type}).toArray();
+  static read(type, from, to) {
+    return this.collection.find({
+      type: type,
+      timestamp: {
+        $gte: from,
+        $lt: to
+      }
+    }).toArray();
+  }
+  static readLast(type) {
+    return this.collection.find({type: type}).sort({timestamp: -1}).limit(50).toArray();
   }
 
   //  Validators
@@ -24,6 +33,16 @@ module.exports = class Users {
       }
 
       return resolve(true);
+    });
+  }
+  static hasTimestamp(timestamp) {
+    return new Promise((resolve, reject) => {
+
+      if(_.isNumber(timestamp)) {
+        return resolve(true);
+      }
+
+      return reject();
     });
   }
 
