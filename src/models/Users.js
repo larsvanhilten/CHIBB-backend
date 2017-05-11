@@ -45,7 +45,7 @@ module.exports = class Users {
     return this.collection.findOneAndDelete({email: email});
   }
   static removeById(id) {
-    return this.collection.findOneAndDelete({_id: id});
+    return this.collection.findOneAndDelete({_id: ObjectId(id)});
   }
   static insert(email, password, name) {
     return new Promise((resolve, reject) => {
