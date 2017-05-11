@@ -33,5 +33,10 @@
     "code": 403,
     "message": "You're not authorized to make this request.",
     "type": "unauthorized"
+  },
+  "brokerDoesNotExist": {
+    "code": 404,
+    "message": "The specified broker could not been found.",
+    "type": "brokerDoesNotExist"
   }
 }

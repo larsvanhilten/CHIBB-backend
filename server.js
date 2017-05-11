@@ -8,6 +8,7 @@ const db = require('./src/services/mongo');
 
 const Users = require('./src/models/Users');
 const Sensor = require('./src/models/Sensor');
+const Broker = require('./src/models/Broker');
 
 const getUser = require('./src/middleware/getUser');
 
@@ -41,6 +42,9 @@ fs.readdir('./src/routes', (err, routes) => {
 
       req.sensor = Sensor;
       req.sensor.init(db);
+
+      req.broker = Broker;
+      req.broker.init(db);
 
       next();
     });
