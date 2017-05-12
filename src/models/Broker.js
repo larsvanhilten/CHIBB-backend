@@ -49,8 +49,12 @@ module.exports = class Broker {
   static hasName(name) {
     return new Promise((resolve, reject) => {
 
-      if(_.isEmpty(name)) {
+      if(_.isNil(name)) {
         return reject(error({type: 'missingProperty', properties: {property: 'name'}}));
+      }
+
+      if(!_.isString(name) || _.isEmpty(name)) {
+        return reject(error({type: 'invalidProperty', properties: {property: 'name'}}));
       }
 
       return resolve(true);
@@ -90,8 +94,12 @@ module.exports = class Broker {
   static hasChannel(channel) {
     return new Promise((resolve, reject) => {
 
-      if(_.isEmpty(channel)) {
+      if(_.isNil(channel)) {
         return reject(error({type: 'missingProperty', properties: {property: 'port'}}));
+      }
+
+      if(!_.isString(channel) || _.isEmpty(channel)) {
+        return reject(error({type: 'invalidProperty', properties: {property: 'port'}}));
       }
 
       return resolve(true);
@@ -100,7 +108,7 @@ module.exports = class Broker {
   static hasId(id) {
     return new Promise((resolve, reject) => {
 
-      if(!id) {
+      if(_.isNil(id)) {
         return reject(error({type: 'missingProperty', properties: {property: 'id'}}));
       }
 

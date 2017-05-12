@@ -71,11 +71,15 @@ module.exports = class Users {
   static hasTimestamp(timestamp) {
     return new Promise((resolve, reject) => {
 
-      if(_.isNumber(timestamp)) {
-        return resolve(true);
+      if(_.isNil(timestamp)) {
+        return reject(error({type: 'missingProperty', properties: {property: 'timestamp'}}));
       }
 
-      return reject();
+      if(!_.isNumber(timestamp)) {
+        return reject(error({type: 'invalidProperty', properties: {property: 'timestamp'}}));
+      }
+
+      return resolve(true);
     });
   }
 
