@@ -33,6 +33,8 @@ before('Set up fixtures', done => {
 
 describe('Models', () => {
   importTest('Users', './models/Users');
+  importTest('Sensor', './models/Sensor');
+  importTest('Broker', './models/Broker');
 });
 
 describe('Middleware', () => {
