@@ -31,7 +31,7 @@ module.exports = class Users {
       if(difference < 3) {
         reading.status = 'active';
       }else if (difference < 60) {
-        reading.status = 'intermittend failure';
+        reading.status = 'intermittend';
       }else {
         reading.status = 'inactive';
       }
