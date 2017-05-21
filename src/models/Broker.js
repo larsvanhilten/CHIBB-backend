@@ -24,7 +24,7 @@ module.exports = class Broker {
         .then(result => resolve(result))
         .catch(() => reject());
       } else {
-        bcrypt.hash(broker, config.server.bcrypt.saltRounds)
+        bcrypt.hash(broker.password, config.server.bcrypt.saltRounds)
         .then(hash => {
           broker.password = hash;
           this.collection.insertOne(broker)
