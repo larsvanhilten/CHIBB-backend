@@ -6,5 +6,6 @@ module.exports = router => {
   router.get('/brokers', isUser, require('../controllers/brokers/readAll'));
 
   router.get('/brokers/:id', isUser, require('../controllers/brokers/read'));
+  router.put('/brokers/:id', isUser, require('../controllers/brokers/update'));
   router.delete('/brokers/:id', isUser, require('../controllers/brokers/delete'));
 };

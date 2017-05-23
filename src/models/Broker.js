@@ -41,6 +41,22 @@ module.exports = class Broker {
   static get(id, userId) {
     return this.collection.findOne({_id: ObjectId(id), userId: userId});
   }
+  static update(updated, userId) {
+    return new Promise((resolve, reject) => {
+      this.get(updated.id, userId)
+      .then(old => {
+        if(updated.password) {
+          updated.password = bcrypt.hashSync(updated.password, config.server.bcrypt.saltRounds);
+        }
+        const broker = _.assign(old, updated);
+        this.collection.findOneAndReplace({_id: ObjectId(broker.id)}, broker,
+        {returnOriginal: false})
+        .then(updatedBroker => resolve(updatedBroker.value))
+        .catch(err => reject(err));
+      })
+      .catch(err => reject(err));
+    });
+  }
   static remove(id, userId) {
     return this.collection.findOneAndDelete({_id: ObjectId(id), userId: userId});
   }
