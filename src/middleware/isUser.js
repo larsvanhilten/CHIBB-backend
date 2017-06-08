@@ -1,6 +1,7 @@
 const {authorize} = require('../services/jwt');
 const error = require('../services/error');
 
+// Middleware which returns whether the user making the request is logged in
 module.exports = (req, res, next) => {
   const token = req.headers.authorization;
 

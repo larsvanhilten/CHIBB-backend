@@ -4,6 +4,7 @@ const _ = require('lodash');
 module.exports = (req, res) => {
   const id = req.params.id;
 
+  // Validations
   Promise.all([
     req.users.hasId(id)
   ])

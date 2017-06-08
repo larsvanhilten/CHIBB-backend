@@ -15,26 +15,24 @@ const getUser = require('./src/middleware/getUser');
 const app = express();
 const router = express.Router();
 
+// Enable CORS
 if(config.server.http.cors) {
   app.use(cors());
 }
 
+// Middleware to support URL-encoded bodies
 app.use(bodyParser.json());
-// to support URL-encoded bodies
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+// Middleware to put current user in to Req Object
 app.use(getUser);
-
-process.on('unhandledRejection', reason => {
-  // eslint-disable-next-line no-console
-  console.log(`reason: ${reason}`);
-});
 
 fs.readdir('./src/routes', (err, routes) => {
   db.connect(config.server.mongo.url)
   .then(db => {
+    // Initialize all models
     app.use((req, res, next) => {
       req.db = db;
       req.users = Users;
@@ -48,6 +46,7 @@ fs.readdir('./src/routes', (err, routes) => {
 
       next();
     });
+    // Require all routes
     _.forEach(routes, route => {
       require(`./src/routes/${route}`)(router);
     });

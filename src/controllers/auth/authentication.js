@@ -10,6 +10,7 @@ module.exports = (req, res) => {
 
   ])
   .then(() => {
+    // Get user by email and compare if password is correct
     req.users.getByEmail(email)
     .then(result => {
       if(!result) {

@@ -4,9 +4,11 @@ module.exports = (req, res) => {
 
   const token = req.headers.authorization;
 
+  // Validations
   Promise.all([
     req.users.hasToken(token)
   ])
+  // Check whether given token is (still) valid
   .then(() => {
     jwt.authorize(token)
     .then(decoded => {

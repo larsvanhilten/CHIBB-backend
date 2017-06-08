@@ -12,7 +12,7 @@ module.exports = class Users {
     this.collection = this.db.collection(collection);
   }
 
-  //  Queries
+  // Queries
   static getAll() {
     return this.collection.find().toArray();
   }
@@ -67,7 +67,8 @@ module.exports = class Users {
   static insertAll(users) {
     return this.collection.insertAll(users);
   }
-  //  Validations
+
+  //  Validators
   static checkUser(user) {
     return new Promise((resolve, reject) => {
       let resolveCounter = 0;

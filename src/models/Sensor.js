@@ -10,7 +10,7 @@ module.exports = class Users {
     this.collection = this.db.collection(collection);
   }
 
-  //  Queries
+  // Queries
   static read(type, from, to) {
     return this.collection.find({
       type: type,
@@ -57,7 +57,7 @@ module.exports = class Users {
 
   }
 
-  //  Validators
+  // Validators
   static hasType(type) {
     return new Promise((resolve, reject) => {
 

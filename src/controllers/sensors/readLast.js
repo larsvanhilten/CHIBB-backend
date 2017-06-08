@@ -3,9 +3,11 @@ const error = require('../../services/error');
 module.exports = (req, res) => {
   const type = req.params.type;
 
+  // Valdiations
   Promise.all([
     req.sensor.hasType(type),
   ])
+  // Return last data for requested sensor
   .then(() => {
     req.sensor.readLast(type)
     .then(readings => {

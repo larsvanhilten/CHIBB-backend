@@ -3,6 +3,7 @@ const error = require('../../services/error');
 module.exports = (req, res) => {
   const id = req.params.id;
 
+  // Validations
   Promise.all([
     req.users.hasId(id)
   ])

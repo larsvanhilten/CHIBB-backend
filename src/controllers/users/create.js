@@ -5,6 +5,7 @@ module.exports = (req, res) => {
   const password = req.body.password;
   const name = req.body.name;
 
+  // Validations
   Promise.all([
     req.users.hasEmail(email),
     req.users.hasPassword(password),

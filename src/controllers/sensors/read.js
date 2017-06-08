@@ -6,6 +6,7 @@ module.exports = (req, res) => {
   const from = _.toNumber(req.params.from);
   const to = _.toNumber(req.params.to);
 
+  // Validations
   Promise.all([
     req.sensor.hasType(type),
     req.sensor.hasTimestamp(from),

@@ -7,12 +7,13 @@ const error = require('../services/error');
 
 module.exports = class Broker {
 
+  // Initialize database object during start-up
   static init(db) {
     this.db = db;
     this.collection = this.db.collection(collection);
   }
 
-  //queries
+  // Queries
   static insert(broker) {
     return new Promise((resolve, reject) => {
 
@@ -61,7 +62,7 @@ module.exports = class Broker {
     return this.collection.findOneAndDelete({_id: ObjectId(id), userId: userId});
   }
 
-  //validators
+  // Validators
   static hasName(name) {
     return new Promise((resolve, reject) => {
 
